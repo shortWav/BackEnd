@@ -1,0 +1,38 @@
+TestModels:
+
+User
+has_many :likes
+has_many :comments
+
+
+Comment
+belongs_to :user
+belongs_to :band
+belongs_to :song
+belongs_to :location   (Maybe not sure about this one)
+
+Likes #join table?
+belongs_to :user
+belongs_to :band
+belongs_to :song
+
+
+Genre
+ has_many :songs
+ has_many :locations
+ has_many :bands
+
+
+Band
+ has_many :songs
+ has_many :comments
+ has_many :likes
+ has_many :genres
+
+Song
+ belongs_to :Band
+ has_many :likes
+ has_many :comments
+
+Location
+ has_many :genres
