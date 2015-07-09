@@ -1,10 +1,11 @@
 Class UsersController < ActiveRecord::ApplicationController
-before_action :authenticate_with_token!
-def index
+
+# before_action :authenticate_with_token!
+  def index
     @user = User.all
-      render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username, :email]) },
-             status: :ok
-    end
+    render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username, :email]) },
+               status: :ok
+  end
 
   def show
     @user = User.find(params[:user_id])
@@ -34,13 +35,14 @@ def index
     passhash = Digest::SHA1.hexdigest(params[:password])
     @user = User.find_by(username: params[:username], password: passhash)
 
-    if @user
-
+      if @user
       render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username,
                                                 :email, :access_token]) },
              status: :ok
-    else
+      else
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity
       end
     end
+
+end

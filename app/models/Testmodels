@@ -34,6 +34,7 @@ Song
  belongs_to :Band
  has_many :likes
  has_many :comments
+ has_many :genres
 
 Location
  has_many :genres
