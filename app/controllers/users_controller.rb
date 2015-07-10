@@ -44,5 +44,3 @@ Class UsersController < ActiveRecord::ApplicationController
              status: :unprocessable_entity
       end
     end
-
-end
