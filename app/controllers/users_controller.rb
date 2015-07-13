@@ -1,6 +1,5 @@
-Class UsersController < ActiveRecord::ApplicationController
-
-# before_action :authenticate_with_token!
+class UsersController < ApplicationController
+before_action :authenticate_with_token!
   def index
     @user = User.all
     render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username, :email]) },
@@ -29,6 +28,7 @@ Class UsersController < ActiveRecord::ApplicationController
       render json: { errors: @user.errors.full_messages },
         status: :unprocessable_entity
     end
+
   end
 
   def login
@@ -43,4 +43,6 @@ Class UsersController < ActiveRecord::ApplicationController
       render json: { errors: @user.errors.full_messages },
              status: :unprocessable_entity
       end
-    end
+  end
+
+end
