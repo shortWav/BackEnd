@@ -23,4 +23,11 @@ class User < ActiveRecord::Base
     end
     token
   end
+
+  def soundclound_login
+    client = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_CLIENT_ID'],
+                        :client_secret => ENV['SOUNDCLOUD_CLIENT_SECRET'],
+                        :redirect_uri => 'http://example.com/callback')
+  end
+
 end

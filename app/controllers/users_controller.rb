@@ -45,4 +45,9 @@ before_action :authenticate_with_token!
       end
   end
 
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "Users Deleted"
+  end
 end

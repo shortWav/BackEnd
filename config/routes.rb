@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
 
 post 'users/register', to: 'users#register'
-get 'users/login', to: 'users#login'
+post 'users/login', to: 'users#login'
+get 'users/destroy', to: 'users#destroy'
 
 
 
-
-
-
-
-
-
+# Pull the users track put into index of all users tracks 
 
 
 
