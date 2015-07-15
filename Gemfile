@@ -13,6 +13,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 
 
+#this is for the the Config.ru
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'soundcloud'
 # Use jquery as the JavaScript library
