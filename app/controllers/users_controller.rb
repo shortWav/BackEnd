@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-before_action :authenticate_with_token!
+before_action :authenticate_with_token!, only: [:destroy]
   def index
     @user = User.all
     render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username, :email]) },
