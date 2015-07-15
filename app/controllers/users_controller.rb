@@ -7,9 +7,13 @@ before_action :authenticate_with_token!
   end
 
   def show
-    @user = User.find(params[:user_id])
-    render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username,
-                                              :email, :access_token]) }
+    @user = User.find_by(username: params[:username])
+      if @user
+        render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username,
+                                              :email]) }
+      else
+        render json: { error: @user.errors.full_messages }, status: :bad_request
+      end
   end
 
   def register
@@ -33,21 +37,42 @@ before_action :authenticate_with_token!
 
   def login
     passhash = Digest::SHA1.hexdigest(params[:password])
-    @user = User.find_by(username: params[:username], password: passhash)
+    # @user = User.find_by(username: params[:username], password: passhash)
 
-      if @user
-      render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username,
-                                                :email, :access_token]) },
-             status: :ok
-      else
-      render json: { errors: @user.errors.full_messages },
-             status: :unprocessable_entity
-      end
+    @user = User.find_by(username: params[:username])
+
+    if @user.password == passhash
+      render json: { user: @user.as_json(except: [:created_at, :updated_at, :password]) },
+                     status: :created
+    else
+      render json: { errors: "Invalid Username or Password." }, status: :unprocessable_entity
+    end
+
+      # if @user
+      # render json: { user: @user.as_json(only: [:id, :first_name, :last_name, :username,
+      #                                           :email, :access_token]) },
+      #        status: :ok
+      # else
+      # render json: { errors: @user.errors.full_messages },
+      #        status: :unprocessable_entity
+      # end
   end
 
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "Users Deleted"
+    @user = User.find_by(id: params[:id])
+    if @user
+      if current_user.access_token == @user.access_token
+        if @user.destroy
+          render json: { message: "User deleted." }, status: :no_content
+        else
+          render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+        end
+      else
+        render json: { errors: "Unauthorized user to delete this user." }, status: :unauthorized
+      end
+    else
+      render json: { errors: "No user found with specified ID." }, status: :unprocessable_entity
+    end
   end
 end
