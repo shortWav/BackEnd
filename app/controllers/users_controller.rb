@@ -60,7 +60,7 @@ before_action :authenticate_with_token!
 
 
   def destroy
-    @user = User.find_by(id: params[:id])
+    @user = User.find_by(username: params[:username])
     if @user
       if current_user.access_token == @user.access_token
         if @user.destroy

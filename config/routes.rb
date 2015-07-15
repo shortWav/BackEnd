@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
 
 
-get 'users', to: 'users#index'
-post 'users', to: 'users#register'
-post 'users/login', to: 'users#login'
-get 'users/:username', to: 'users#show'
-delete 'users/:username', to: 'users#destroy'
+get 'users', to: 'users#index' #to get all the users in the database
+post 'users', to: 'users#register' #Creating a user
+post 'users/login', to: 'users#login' #Login for a user
+get 'users/:username', to: 'users#show' #Get a single user from their username
+delete 'users/:username', to: 'users#destroy' #Delete a user from the database using their username
 
 
 
