@@ -75,4 +75,23 @@ before_action :authenticate_with_token!, only: [:destroy]
       render json: { errors: "No user found with specified ID." }, status: :unprocessable_entity
     end
   end
+
+  def login
+    redirect_to SOUNDCLOUD_API.authorize_url
+  end
+
+  def callback
+    client = SOUNDCLOUD_API
+
+    token = client.exchange_token(:code => params[:code])
+    userinfo = client.get('/me')
+    attributes = {
+      soundcloud_id: userinfo.id,
+      name: userinfo.username
+    }
+    # Band.create(attributes)
+    Band.create(name: userinfo.username, soundcloud_id: userinfo.id)
+
+    render json: attributes
+  end
 end

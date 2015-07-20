@@ -9,7 +9,12 @@ post 'users/login', to: 'users#login' #Login for a user
 get 'users/:username', to: 'users#show' #Get a single user from their username
 delete 'users/:username', to: 'users#destroy' #Delete a user from the database using their username
 
+post 'songs', to: 'songs#create'
+get 'songs', to: 'songs#index'
+get '/songs/:id', to: 'songs#show'
 
+get '/callback', to: 'users#callback'
+get '/login', to: 'users#login'
 
 
 

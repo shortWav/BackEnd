@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
 
   def soundclound_login
     client = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_CLIENT_ID'],
-                        :client_secret => ENV['SOUNDCLOUD_CLIENT_SECRET'],
-                        :redirect_uri => 'http://example.com/callback')
+                        :client_secret => ENV['SOUNDCLOUD_SECRET_ID'],
+                        :redirect_uri => 'https://arcane-badlands-3651.herokuapp.com/:username')
   end
 
 end
